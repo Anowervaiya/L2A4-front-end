@@ -1,10 +1,18 @@
+
+import { UpdateBook } from '@/home/UpdateBooks';
 import { useDeleteBookMutation, useGetAllbookQuery } from '@/redux/Api/bookApi';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 function Table() {
   const { data, isLoading } = useGetAllbookQuery(undefined);
+  const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  
+
+
   const [deleteBooks] = useDeleteBookMutation();
   if (isLoading) return <div>Loading...</div>;
-  console.log(data);
+  // console.log(data);
   const books = data?.data;
 
   const handleDelete = (id : number) => {
@@ -133,13 +141,16 @@ function Table() {
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-2">
                                 <div className="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
-                                  {item.available ? "true" : "false"}
+                                  {item.available ? 'true' : 'false'}
                                 </div>
                               </div>
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-6">
-                                <button onClick={()=> handleDelete(item?._id)} className="   transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+                                <button
+                                  onClick={() => handleDelete(item?._id)}
+                                  className="   transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+                                >
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -156,22 +167,21 @@ function Table() {
                                   </svg>
                                 </button>
 
-                                <button>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    className="w-5 h-5"
-                                  >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                    />
-                                  </svg>
+                                <button
+                                  onClick={() => {
+                                    setSelectedBookId(item._id.toString());
+                                    setIsUpdateDialogOpen(true);
+                                  }}
+                                >
+                                  Edit
                                 </button>
+
+                                <UpdateBook
+                                  bookId={selectedBookId}
+                                  open={isUpdateDialogOpen}
+                                  onClose={() => setIsUpdateDialogOpen(false)}
+                                />
+
                                 <button>
                                   <svg
                                     width="24px"
