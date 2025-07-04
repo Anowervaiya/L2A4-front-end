@@ -1,69 +1,81 @@
-# React + TypeScript + Vite
+# 📚 Minimal Library Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack, minimalistic Library Management System built using **React**, **Redux Toolkit Query (RTK Query)**, **TypeScript**, **Node.js**, **Express.js**, and **MongoDB**.  
+It allows users to view, manage, borrow books, and see borrow summaries — without authentication or complex roles.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## Expanding the ESLint configuration
+🔗 [Frontend Live]([https://your-frontend-url.com](https://glittery-cheesecake-cf81ab.netlify.app/))  
+🔗 [Backend API]([https://your-backend-url.com/api](https://l2a4-mu.vercel.app/))
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### ✅ Book Management
+- View all books in a table format
+- Add new books with title, author, genre, ISBN, copies, etc.
+- Edit existing book info
+- Delete books
+- Availability automatically toggled if copies = 0
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### ✅ Borrow Book
+- Borrow books by specifying quantity and due date
+- Prevents borrowing more than available copies
+- Automatically updates book availability status
+- Simple modal form for smooth user experience
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### ✅ Borrow Summary
+- Aggregated summary view of all borrowed books
+- Shows total quantity borrowed for each book
+- Columns: **Book Title**, **ISBN**, **Total Quantity Borrowed**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### ✅ UI/UX
+- Clean, minimalist design
+- Fully responsive layout
+- Toast notifications for feedback
+- Modals for create/edit/borrow operations
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🧱 Tech Stack
+
+| Layer        | Technology                  |
+|--------------|------------------------------|
+| Frontend     | React, TypeScript, Tailwind CSS |
+| State Mgmt   | Redux Toolkit, RTK Query     |
+| Backend      | Node.js, Express.js          |
+| Database     | MongoDB, Mongoose            |
+| Styling      | Tailwind CSS                 |
+
+---
+
+## 📁 Folder Structure
+
+root/
+├── client/ # React frontend
+│ ├── components/ # UI components
+│ ├── pages/ # Page-level components
+│ ├── redux/ # RTK Query APIs and slices
+│ └── App.tsx
+├── server/ # Express backend
+│ ├── controllers/ # Route handlers
+│ ├── models/ # Mongoose models
+│ ├── interfaces/ # Type definitions
+│ └── app.ts # Entry point
+
+yaml
+Copy
+Edit
+
+---
+
+## 🛠️ Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/library-management.git
+cd library-management
