@@ -1,17 +1,38 @@
 
+import { BorrowDialog } from '@/home/BorrowBook';
 import { UpdateBook } from '@/home/UpdateBooks';
 import { useDeleteBookMutation, useGetAllbookQuery } from '@/redux/Api/bookApi';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+
+
+type Book = {
+  _id: number;
+  title: string;
+  author: string;
+  genre: string;
+  isbn: string;
+  description: string;
+  copies: number;
+  available: boolean;
+};
+
 function Table() {
   const { data, isLoading } = useGetAllbookQuery(undefined);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   
+  const [selectedBook, setSelectedBook] = useState<{
+    id: string;
+    availableCopies: number;
+  } | null>(null);
 
+  const handleBorrowClick = (book: { id: string; copies: number }) => {
+    setSelectedBook({ id: book.id, availableCopies: book.copies });
+  };
 
   const [deleteBooks] = useDeleteBookMutation();
-  if (isLoading) return <div>Loading...</div>;
+
   // console.log(data);
   const books = data?.data;
 
@@ -45,17 +66,7 @@ function Table() {
     });
   };
 
-  type Book = {
-      _id: number;
-      title: string;
-      author: string;
-      genre: string;
-      isbn: string;
-      description: string;
-      copies: number;
-      available: boolean;
-    };
-    
+  if (isLoading) return <div>Loading...</div>;
    
     return (
       <div>
@@ -147,6 +158,8 @@ function Table() {
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-6">
+
+                                {/* delete  */}
                                 <button
                                   onClick={() => handleDelete(item?._id)}
                                   className="   transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
@@ -166,8 +179,9 @@ function Table() {
                                     />
                                   </svg>
                                 </button>
-
+                            {/* edit */}
                                 <button
+                                  className="hover:text-yellow-400 hover:cursor-pointer"
                                   onClick={() => {
                                     setSelectedBookId(item._id.toString());
                                     setIsUpdateDialogOpen(true);
@@ -181,6 +195,22 @@ function Table() {
                                   open={isUpdateDialogOpen}
                                   onClose={() => setIsUpdateDialogOpen(false)}
                                 />
+
+                             {/* borrow */}
+                                <button onClick={() => handleBorrowClick({ id: item._id.toString(), copies: item.copies })}>
+                                  Borrow
+                                </button>
+
+                                {selectedBook && (
+                                  <BorrowDialog
+                                    open={!!selectedBook}
+                                    onClose={() => setSelectedBook(null)}
+                                    bookId={selectedBook.id}
+                                    availableCopies={
+                                      selectedBook.availableCopies
+                                    }
+                                  />
+                                )}
 
                                 <button>
                                   <svg

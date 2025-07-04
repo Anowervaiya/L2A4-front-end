@@ -26,11 +26,11 @@ type UpdateBookProps = {
 };
 
 export function UpdateBook({ bookId, open, onClose }: UpdateBookProps) {
-  const [addBook, { isLoading }] = useAddBookMutation();
+  
   const { data, isLoading: fetching } = useGetBookByIdQuery(bookId, {
     skip: !bookId,
   });
-  const [updateBook, { isLoading  : updateLoading}] = useUpdateBookMutation();
+  const [updateBook , {isLoading}] = useUpdateBookMutation();
 
   const [formData, setFormData] = useState({
     _id: '',
@@ -58,6 +58,7 @@ export function UpdateBook({ bookId, open, onClose }: UpdateBookProps) {
       });
     }
   }, [data]);
+  
   const handleChange = (name: string, value: string | number | boolean) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
