@@ -75,7 +75,7 @@ function Table() {
             <h2 className="text-lg font-medium    dark:text-white">All Books</h2>
 
             <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
-              {books.length}
+              {books?.length}
             </span>
           </div>
 
@@ -130,7 +130,7 @@ function Table() {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
 
-                      {books.map((item :Book , idx :number ) => {
+                      {books?.map((item :Book , idx :number ) => {
                         return (
                           <tr key={idx}>
                             <td className="px-4 py-4 text-sm font-medium    whitespace-nowrap">
@@ -158,7 +158,6 @@ function Table() {
                             </td>
                             <td className="px-4 py-4 text-sm whitespace-nowrap">
                               <div className="flex items-center gap-x-6">
-
                                 {/* delete  */}
                                 <button
                                   onClick={() => handleDelete(item?._id)}
@@ -179,7 +178,7 @@ function Table() {
                                     />
                                   </svg>
                                 </button>
-                            {/* edit */}
+                                {/* edit */}
                                 <button
                                   className="hover:text-yellow-400 hover:cursor-pointer"
                                   onClick={() => {
@@ -196,9 +195,17 @@ function Table() {
                                   onClose={() => setIsUpdateDialogOpen(false)}
                                 />
 
-                             {/* borrow */}
-                                <button onClick={() => handleBorrowClick({ id: item._id.toString(), copies: item.copies })}>
-                                  Borrow
+                                {/* borrow */}
+                                <button
+                                  className="hover:text-green-400 hover:cursor-pointer"
+                                  onClick={() =>
+                                    handleBorrowClick({
+                                      id: item._id.toString(),
+                                      copies: item.copies,
+                                    })
+                                  }
+                                >
+                                borrow
                                 </button>
 
                                 {selectedBook && (
@@ -212,19 +219,7 @@ function Table() {
                                   />
                                 )}
 
-                                <button>
-                                  <svg
-                                    width="24px"
-                                    height="24px"
-                                    viewBox="0 0 24 24"
-                                    className="w-7 h-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <circle cx="16.5" cy="18.5" r="1.5" />
-                                    <circle cx="9.5" cy="18.5" r="1.5" />
-                                    <path d="M18 16H8a1 1 0 0 1-.958-.713L4.256 6H3a1 1 0 0 1 0-2h2a1 1 0 0 1 .958.713L6.344 6H21a1 1 0 0 1 .937 1.352l-3 8A1 1 0 0 1 18 16zm-9.256-2h8.563l2.25-6H6.944z" />
-                                  </svg>
-                                </button>
+                                <button></button>
                               </div>
                             </td>
                           </tr>
@@ -239,96 +234,7 @@ function Table() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-6">
-            <a
-              href="#"
-              className="flex items-center px-5 py-2 text-sm   capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-5 h-5 rtl:-scale-x-100"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-                />
-              </svg>
-
-              <span>previous</span>
-            </a>
-
-            <div className="items-center hidden lg:flex gap-x-3">
-              <a
-                href="#"
-                className="px-2 py-1 text-sm text-blue-500 rounded-md dark:bg-gray-800 bg-blue-100/60"
-              >
-                1
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 text-sm    rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-              >
-                2
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 text-sm    rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-              >
-                3
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 text-sm    rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-              >
-                ...
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 text-sm    rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-              >
-                12
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 text-sm    rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-              >
-                13
-              </a>
-              <a
-                href="#"
-                className="px-2 py-1 text-sm    rounded-md dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
-              >
-                14
-              </a>
-            </div>
-
-            <a
-              href="#"
-              className="flex items-center px-5 py-2 text-sm   capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
-            >
-              <span>Next</span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="w-5 h-5 rtl:-scale-x-100"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </a>
-          </div>
+        
         </section>
       </div>
     );

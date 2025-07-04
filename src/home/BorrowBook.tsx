@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 import { useBorrowBookMutation } from '@/redux/Api/borrowApi';
+import { useNavigate } from 'react-router';
 
 interface Props {
   open: boolean;
@@ -24,6 +25,8 @@ export const BorrowDialog = ({
   bookId,
   availableCopies,
 }: Props) => {
+
+  const navigate = useNavigate()
   const [quantity, setQuantity] = useState(1);
   const [dueDate, setDueDate] = useState('');
   const [borrowBook, { isLoading }] = useBorrowBookMutation();
@@ -41,7 +44,8 @@ export const BorrowDialog = ({
       onClose();
 
       // Optionally redirect
-      window.location.href = '/borrow-summary';
+      // window.location.href = '/borrow-summary';
+      navigate('/borrow-summary')
     } catch (err: any) {
       console.error('Borrow Error:', err);
       toast.error(err?.data?.message || 'Borrow failed!');

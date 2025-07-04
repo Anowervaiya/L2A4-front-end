@@ -51,6 +51,7 @@ export function AddBooks() {
         available: formData.available === true,
       }).unwrap();
       alert('Book added successfully');
+     
       setFormData({
         title: '',
         author: '',
@@ -66,9 +67,11 @@ export function AddBooks() {
     }
   };
   return (
-    <Dialog>
+    <Dialog >
       <DialogTrigger asChild>
-        <Button variant="outline">Add Book</Button>
+        <Button   className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition">
+          📚 Add Book
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
@@ -99,7 +102,6 @@ export function AddBooks() {
               <Label htmlFor="genre">Genre</Label>
               <Select
                 value={formData.genre}
-             
                 onValueChange={value => handleChange('genre', value)}
               >
                 <SelectTrigger id="genre">
@@ -152,6 +154,17 @@ export function AddBooks() {
                 </SelectContent>
               </Select>
             </div>
+          </div>
+          <div className="grid gap-3 pt-3">
+            <Label htmlFor="description">Description</Label>
+            <textarea
+              id="description"
+              rows={4}
+              value={formData.description}
+              onChange={e => handleChange('description', e.target.value)}
+              className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter a brief description of the book..."
+            ></textarea>
           </div>
 
           <DialogFooter className="pt-4">
